@@ -254,4 +254,5 @@
     <string name="or_connect_with_social_media">أو التواصل مع الاجتماعية</string>
     <string name="whats_your_mail_address">ما هو عنوان بريدك الالكترونى؟</string>
     <string name="cvv">CVV</string>
+    <string name="cabSelectionMessage">Please select how do you like us to transport you?</string>
 </resources>

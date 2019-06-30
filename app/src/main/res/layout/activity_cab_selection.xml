@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_2"
+    android:orientation="vertical">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideLineSpaceTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <com.taxibooking.user.Utils.MyTextView
+        android:id="@+id/txtHiMsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/quicksand_bold"
+        android:gravity="center"
+        android:text="Hi, there.."
+        android:textColor="@color/white"
+        android:textSize="@dimen/_20sdp"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/guideLineSpaceTop" />
+
+    <com.taxibooking.user.Utils.MyTextView
+        android:id="@+id/txtQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:fontFamily="@font/quicksand_bold"
+        android:gravity="center"
+        android:text="@string/cabSelectionMessage"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14sdp"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/txtHiMsg" />
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/txtQuestion">
+
+        <Button
+            android:id="@+id/btnWithinCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/white_rect_bg"
+            android:text="Ride Innercity"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp" />
+
+        <Button
+            android:id="@+id/btnOutsideCityCar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/color_rect_bg"
+            android:text="Ride Intercity Car"
+            android:textAllCaps="false"
+            android:textColor="@color/bg_2"
+            android:textSize="@dimen/_20sdp" />
+
+        <Button
+            android:id="@+id/btnOutsideCityBus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/white_rect_bg"
+            android:text="Ride Intercity Bus"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp" />
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

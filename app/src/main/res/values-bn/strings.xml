@@ -321,6 +321,7 @@
     <string name="amount_alert">টাকার পরিমাণ দিন</string>
     <string name="add_money_to_wallet">ওয়ালেট এ টাকা যোগ করুন</string>
     <string name="version">সংস্করণ</string>
+    <string name="cabSelectionMessage">Please select how do you like us to transport you?</string>
 
 
 </resources>

@@ -396,6 +396,7 @@
     <string name="amount_alert">Please enter the amount</string>
     <string name="add_money_to_wallet">ADD MONEY TO THE WALLET</string>
     <string name="version">Version</string>
+    <string name="cabSelectionMessage">Please select how do you like us to transport you?</string>
 
 
 </resources>

@@ -237,4 +237,5 @@
     <string name="bookmark">ドライバー</string>
     <string name="search">スケジュール</string>
     <string name="fresh">ようこそ</string>
+    <string name="cabSelectionMessage">Please select how do you like us to transport you?</string>
 </resources>

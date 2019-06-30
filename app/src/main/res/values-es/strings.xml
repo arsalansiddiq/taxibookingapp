@@ -237,4 +237,5 @@
     <string name="amount_alert">Por favor, introduzca la cantidad</string>
     <string name="add_money_to_wallet">Depositar dinero en la cartera</string>
     <string name="version">Versión</string>
+    <string name="cabSelectionMessage">Please select how do you like us to transport you?</string>
 </resources>
