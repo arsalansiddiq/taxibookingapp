@@ -200,7 +200,11 @@ public class ActivityPassword extends AppCompatActivity {
                                 } else {
                                     displayMessage(getString(R.string.please_try_again));
                                 }
-
+                                try {
+                                    displayMessage(errorObj.optString("error"));
+                                } catch (Exception e) {
+//                                    displayMessage(getString(R.string.something_went_wrong));
+                                }
                             } catch (Exception e) {
                                 displayMessage(getString(R.string.something_went_wrong));
                             }

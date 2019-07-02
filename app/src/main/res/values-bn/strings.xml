@@ -322,6 +322,10 @@
     <string name="add_money_to_wallet">ওয়ালেট এ টাকা যোগ করুন</string>
     <string name="version">সংস্করণ</string>
     <string name="cabSelectionMessage">Please select how do you like us to transport you?</string>
+    <string name="book_now">Book now</string>
+    <string name="car_booking">Car Booking</string>
+    <string name="ops_no_trip_availble">Opss.. No Trips availble to Book</string>
+    <string name="bus_booking">Bus Booking</string>
 
 
 </resources>

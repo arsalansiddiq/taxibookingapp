@@ -255,4 +255,8 @@
     <string name="whats_your_mail_address">ما هو عنوان بريدك الالكترونى؟</string>
     <string name="cvv">CVV</string>
     <string name="cabSelectionMessage">Please select how do you like us to transport you?</string>
+    <string name="book_now">Book now</string>
+    <string name="car_booking">Car Booking</string>
+    <string name="ops_no_trip_availble">Opss.. No Trips availble to Book</string>
+    <string name="bus_booking">Bus Booking</string>
 </resources>

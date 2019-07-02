@@ -136,9 +136,9 @@ public class RegisterActivity extends AppCompatActivity {
                     displayMessage(getString(R.string.password_validation));
                 } else if(password.length() < 8 || password.length() > 16){
                     displayMessage(getString(R.string.password_validation1));
-                }else if(!Utilities.isValidPassword(password.getText().toString().trim())){
+                }/*else if(!Utilities.isValidPassword(password.getText().toString().trim())){
                     displayMessage(getString(R.string.password_validation2));
-                }else {
+                }*/else {
                     if (isInternet) {
                         checkMailAlreadyExit();
                     } else {

@@ -35,170 +35,175 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <application
-        android:name="com.taxibooking.user.BorakhApplication"
+        android:name=".BorakhApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activities.BusTripSearchingActivity"></activity>
+        <activity android:name=".Activities.CarTripSearchingActivity" />
+        <activity android:name=".Activities.BusBookingActivity" />
+        <activity android:name=".Activities.CarBookingActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_api" />
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-
         <activity
-            android:name="com.taxibooking.user.Activities.SplashScreen"
+            android:name=".Activities.SplashScreen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.taxibooking.user.Activities.BeginScreen"
+            android:name=".Activities.BeginScreen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.taxibooking.user.Activities.ActivitySocialLogin"
+            android:name=".Activities.ActivitySocialLogin"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.taxibooking.user.Activities.RegisterActivity"
+            android:name=".Activities.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.taxibooking.user.Activities.ActivityEmail"
+            android:name=".Activities.ActivityEmail"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.taxibooking.user.Activities.Payment"
+            android:name=".Activities.Payment"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.taxibooking.user.Activities.ActivityPassword"
+            android:name=".Activities.ActivityPassword"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.taxibooking.user.Activities.MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.taxibooking.user.Activities.ForgetPassword"
+            android:name=".Activities.ForgetPassword"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.taxibooking.user.Activities.EditProfile"
+            android:name=".Activities.EditProfile"
             android:label="@string/edit_profile"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.taxibooking.user.Activities.ShowProfile"
+            android:name=".Activities.ShowProfile"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.taxibooking.user.Fragments.SoruceAndDestination"
+            android:name=".Fragments.SoruceAndDestination"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.taxibooking.user.Activities.AddCard"
+            android:name=".Activities.AddCard"
             android:label="@string/add"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.taxibooking.user.Activities.HistoryDetails"
+            android:name=".Activities.HistoryDetails"
             android:label="@string/history"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.taxibooking.user.Activities.HistoryActivity"
+            android:name=".Activities.HistoryActivity"
             android:label="@string/history"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.taxibooking.user.Activities.WalletAndCouponHistory"
+            android:name=".Activities.WalletAndCouponHistory"
             android:label="@string/passbook"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.taxibooking.user.Activities.ActivityWallet"
+            android:name=".Activities.ActivityWallet"
             android:label="@string/action_wallet"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.taxibooking.user.Activities.CouponActivity"
+            android:name=".Activities.CouponActivity"
             android:label="@string/action_coupon"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.taxibooking.user.Activities.ChangePassword"
+            android:name=".Activities.ChangePassword"
             android:label="@string/change_password"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.taxibooking.user.Activities.CustomGooglePlacesSearch"
+            android:name=".Activities.CustomGooglePlacesSearch"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.taxibooking.user.Activities.ActivitySettings"
+            android:name=".Activities.ActivitySettings"
+            android:configChanges="locale"
             android:label="@string/settings"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="locale"/>
-        <activity
-            android:name="com.taxibooking.user.Activities.AddHomeWorkActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <!-- Firebase Notifications -->
-        <service android:name="com.taxibooking.user.FCM.MyFirebaseMessagingService">
+        <activity
+            android:name=".Activities.AddHomeWorkActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- Firebase Notifications -->
+        <service android:name=".FCM.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.taxibooking.user.FCM.MyFirebaseInstanceIDService">
+        <service android:name=".FCM.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name="com.taxibooking.user.Activities.ActivityHelp"
-            android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
+        <activity
+            android:name=".Activities.ActivityHelp"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.WelcomeScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name="com.taxibooking.user.Activities.WelcomeScreenActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
         <meta-data
             android:name="com.facebook.accountkit.ApplicationName"
             android:value="@string/app_name" />
@@ -210,10 +215,10 @@
             android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
 
         <activity android:name="com.facebook.accountkit.ui.AccountKitActivity" />
-        <activity android:name=".Activities.ActivityCabTypeSelection"
+        <activity
+            android:name=".Activities.ActivityCabTypeSelection"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

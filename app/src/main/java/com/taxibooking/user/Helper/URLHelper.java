@@ -18,7 +18,7 @@ public class URLHelper {
 
     public static final String STRIPE_TOKEN = "pk_test_AHZrWSgVaPpycFBlE6S6awzz"; // javaorjava
 
-    public static final String login = base + "oauth/token";
+    public static final String login = base + "api/user/oauth/token";
     public static final String register = base + "api/user/signup";
     public static final String UserProfile = base + "api/user/details";
     public static final String CHECK_MAIL_ALREADY_REGISTERED = base + "api/user/verify";

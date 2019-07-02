@@ -20,7 +20,7 @@ android {
         // if true, stop the gradle build if errors are found
         abortOnError false
         // turn on the given issue id's
-        enable 'RtlHardcoded','RtlCompat', 'RtlEnabled'
+        enable 'RtlHardcoded', 'RtlCompat', 'RtlEnabled'
     }
 
     dexOptions {
@@ -100,7 +100,6 @@ dependencies {
     //noinspection GradleCompatible
 
 
-
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.google.android.gms:play-services-gcm:16.1.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
@@ -108,10 +107,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-places:16.0.0'
 
 
-
     //noinspection UseOfBundledGooglePlayServices
     implementation 'com.google.android.gms:play-services:12.0.1'
-
 
 
     implementation 'com.google.firebase:firebase-messaging:17.5.0'
@@ -146,6 +143,10 @@ dependencies {
 
     //AppBajar lib
     implementation 'com.aapbd:appbajar-lib:1.0.2'
+
+    //For ButterKnife
+    implementation 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 }
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.gms.google-services'
