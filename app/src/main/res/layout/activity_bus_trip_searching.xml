@@ -114,6 +114,34 @@
                     android:text="Select Trip Date"
                     android:textSize="@dimen/_14sdp" />
 
+                <com.taxibooking.user.Utils.MyTextView
+                    android:id="@+id/btnSelectDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:background="@drawable/edittext_bg"
+                    android:gravity="start"
+                    android:hint="Select Date"
+                    android:inputType="textCapCharacters"
+                    android:padding="@dimen/_10sdp"
+                    android:textDirection="locale" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:orientation="vertical">
+
+                <com.taxibooking.user.Utils.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Select Trip Date"
+                    android:textSize="@dimen/_14sdp" />
+
                 <Spinner
                     android:id="@+id/spnTripTime"
                     android:layout_width="match_parent"

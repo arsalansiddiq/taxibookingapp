@@ -200,11 +200,7 @@ public class ActivityPassword extends AppCompatActivity {
                                 } else {
                                     displayMessage(getString(R.string.please_try_again));
                                 }
-                                try {
-                                    displayMessage(errorObj.optString("error"));
-                                } catch (Exception e) {
-//                                    displayMessage(getString(R.string.something_went_wrong));
-                                }
+
                             } catch (Exception e) {
                                 displayMessage(getString(R.string.something_went_wrong));
                             }
@@ -444,7 +440,8 @@ public class ActivityPassword extends AppCompatActivity {
         }
 
     public void GoToMainActivity(){
-        Intent mainIntent = new Intent(activity, MainActivity.class);
+//        Intent mainIntent = new Intent(activity, MainActivity.class);
+        Intent mainIntent = new Intent(activity, ActivityCabTypeSelection.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mainIntent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);

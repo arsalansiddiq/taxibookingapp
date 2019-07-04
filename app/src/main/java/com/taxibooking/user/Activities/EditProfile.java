@@ -535,7 +535,8 @@ public class EditProfile extends AppCompatActivity {
     }
 
     public void GoToMainActivity() {
-        Intent mainIntent = new Intent(activity, MainActivity.class);
+//        Intent mainIntent = new Intent(activity, MainActivity.class);todo activityChangeHere
+        Intent mainIntent = new Intent(activity, ActivityCabTypeSelection.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(mainIntent);
         activity.finish();

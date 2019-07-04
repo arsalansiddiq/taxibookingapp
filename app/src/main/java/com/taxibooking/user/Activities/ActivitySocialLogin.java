@@ -577,7 +577,8 @@ public class ActivitySocialLogin extends AppCompatActivity implements GoogleApiC
     }
 
     public void GoToMainActivity() {
-        Intent mainIntent = new Intent(context, MainActivity.class);
+//        Intent mainIntent = new Intent(context, MainActivity.class);todo activityChangeHere
+        Intent mainIntent = new Intent(context, ActivityCabTypeSelection.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mainIntent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);

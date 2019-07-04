@@ -21,6 +21,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.taxibooking.user.Activities.ActivityCabTypeSelection;
 import com.taxibooking.user.Activities.AddCard;
 import com.taxibooking.user.Activities.WelcomeScreenActivity;
 import com.android.volley.AuthFailureError;
@@ -473,6 +474,7 @@ public class Payment extends Fragment {
 
     public void GoToMainActivity() {
         Intent mainIntent = new Intent(activity, MainActivity.class);
+//        Intent mainIntent = new Intent(activity, ActivityCabTypeSelection.class);todo activityChangeHere
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(mainIntent);
         activity.finish();

@@ -484,6 +484,7 @@ public class Payment extends AppCompatActivity {
 
     public void GoToMainActivity() {
         Intent mainIntent = new Intent(activity, MainActivity.class);
+//        Intent mainIntent = new Intent(activity, ActivityCabTypeSelection.class); todo activityChangeHere
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(mainIntent);
         activity.finish();

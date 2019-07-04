@@ -147,6 +147,7 @@ dependencies {
     //For ButterKnife
     implementation 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
 }
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.gms.google-services'

@@ -211,7 +211,8 @@ public class ActivitySettings extends AppCompatActivity {
         mApiInterface = RetrofitClient.getLiveTrackingClient().create(ApiInterface.class);
 
         Call<ResponseBody> call = mApiInterface.getFavoriteLocations("XMLHttpRequest",
-                SharedHelper.getKey(ActivitySettings.this, "token_type") + " " + SharedHelper.getKey(ActivitySettings.this, "access_token"));
+                SharedHelper.getKey(ActivitySettings.this, "token_type") + " "
+                        + SharedHelper.getKey(ActivitySettings.this, "access_token"));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {

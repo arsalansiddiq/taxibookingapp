@@ -16,6 +16,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
+import com.taxibooking.user.Activities.ActivityCabTypeSelection;
 import com.taxibooking.user.Activities.MainActivity;
 import com.taxibooking.user.Utils.Utilities;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -44,7 +45,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     //This method is only generating push notification
     //It is same as we did in earlier posts
     private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
+//        Intent intent = new Intent(this, MainActivity.class); todo activityChangeHere
+        Intent intent = new Intent(this, ActivityCabTypeSelection.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("Notification",messageBody);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,

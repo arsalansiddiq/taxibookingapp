@@ -11,14 +11,13 @@ public class URLHelper {
     public static final String REDIRECT_URL = base;
     public static final String REDIRECT_SHARE_URL = "https://maps.google.com/maps?q=loc:";
     public static final String APP_URL = "https://play.google.com/store/apps/details?id=";
-    public static final int client_id = 4;  // server side passport credentials
-    public static final String client_secret = "sMsmpOEH7G65tsygF3UKMh3ToC0UcnZiSAnZCOtx";   // server side passport credentials
-
+    public static final int client_id = 2;  // server side passport credentials
+    public static final String client_secret = "dKk0ZRl0i4S8xf038dLsj6tMRAl7Sy58xwb4tHR4";   // server side passport credentials
 
 
     public static final String STRIPE_TOKEN = "pk_test_AHZrWSgVaPpycFBlE6S6awzz"; // javaorjava
 
-    public static final String login = base + "api/user/oauth/token";
+    public static final String login = base + "oauth/token";
     public static final String register = base + "api/user/signup";
     public static final String UserProfile = base + "api/user/details";
     public static final String CHECK_MAIL_ALREADY_REGISTERED = base + "api/user/verify";
@@ -53,4 +52,11 @@ public class URLHelper {
     public static final String GET_COUPON_HISTORY = base + "api/user/promo/passbook";
     public static final String EXTEND_TRIP = base + "api/user/update/request";
     public static final String SAVE_LOCATION = base + "api/user/location";
+
+    public static final String GET_ALL_CITIES = "api/user/cities";
+    public static final String GET_ALL_BUS_TIME_SLOT = "api/user/timeslot";
+    public static final String GET_ALL_CAR_TRIPS = "api/user/cartrips";
+    public static final String GET_ALL_BUS_TRIPS = "api/user/bustrips";
+    public static final String POST_CAR_BOOKING = "api/user/cartrip/request";
+    public static final String POST_BUS_BOOKING = "api/user/bustrip/request";
 }

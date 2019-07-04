@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -33,7 +34,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  * @Company android
  **/
 
-public class BorakhApplication extends Application {
+public class BorakhApplication extends MultiDexApplication {
 
     public static final String TAG = BorakhApplication.class
             .getSimpleName();

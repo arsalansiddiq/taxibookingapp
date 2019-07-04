@@ -767,7 +767,8 @@ public class RegisterActivity extends AppCompatActivity {
     public void GoToMainActivity() {
         if (customDialog != null && customDialog.isShowing())
             customDialog.dismiss();
-        Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+//        Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);todo activityChangeHere
+        Intent mainIntent = new Intent(RegisterActivity.this, ActivityCabTypeSelection.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mainIntent);
         RegisterActivity.this.finish();

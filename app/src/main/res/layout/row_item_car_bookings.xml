@@ -114,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:text="Price : "
+                        android:text="Total Rent : "
                         android:textColor="@color/bg_2"
                         android:textSize="16sp" />
 
@@ -129,6 +129,65 @@
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
+
+                <!--<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp">
+
+                        <com.taxibooking.user.Utils.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:text="Front Seat : "
+                            android:textColor="@color/bg_2"
+                            android:textSize="16sp" />
+
+                        <com.taxibooking.user.Utils.MyTextView
+                            android:id="@+id/txtFrontRent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:alpha="0.7"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="300"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp">
+
+                        <com.taxibooking.user.Utils.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:text="Back Seat : "
+                            android:textColor="@color/bg_2"
+                            android:textSize="16sp" />
+
+                        <com.taxibooking.user.Utils.MyTextView
+                            android:id="@+id/txtBackSeat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:alpha="0.7"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="300"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </LinearLayout>-->
 
 
             </LinearLayout>

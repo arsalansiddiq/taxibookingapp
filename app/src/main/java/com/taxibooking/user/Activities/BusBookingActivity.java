@@ -1,19 +1,30 @@
 package com.taxibooking.user.Activities;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.taxibooking.user.Helper.CustomDialog;
+import com.taxibooking.user.Helper.SharedHelper;
+import com.taxibooking.user.Models.BusTripModel;
 import com.taxibooking.user.R;
+import com.taxibooking.user.Retrofit.ApiInterface;
+import com.taxibooking.user.Retrofit.RetrofitClient;
 import com.taxibooking.user.Utils.MyBoldTextView;
 import com.taxibooking.user.Utils.MyButton;
 import com.taxibooking.user.Utils.MyTextView;
@@ -23,6 +34,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BusBookingActivity extends AppCompatActivity {
     BusBookingAdapter bookingAdapter;
@@ -38,18 +52,64 @@ public class BusBookingActivity extends AppCompatActivity {
     ImageView errorImage;
     @BindView(R.id.errorLayout)
     RelativeLayout errorLayout;
+    int mNumberOfSeats = 0;
+
+    int fromCityId = 0;
+    int toCityId = 0;
+    String selectedDate = "";
+    String selectedTime = "";
+
+    String accessToken = "";
+    private ApiInterface mApiInterface;
+    private CustomDialog customDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_booking);
         ButterKnife.bind(this);
+
+        customDialog = new CustomDialog(this);
+        customDialog.setCancelable(false);
+        mApiInterface = RetrofitClient.getCustomClient().create(ApiInterface.class);
+        accessToken = SharedHelper.getKey(this, "token_type") + " "
+                + SharedHelper.getKey(this, "access_token");
+
+
+        fromCityId = getIntent().getIntExtra("fromCityId", 0);
+        toCityId = getIntent().getIntExtra("toCityId", 0);
+        selectedDate = getIntent().getStringExtra("dateSelected");
+        selectedTime = getIntent().getStringExtra("timeSelected");
+
+
     }
+
+    private void getFilteredTrips() {
+
+        Call<ArrayList<BusTripModel>> call = mApiInterface.getBusTrips(accessToken, String.valueOf(fromCityId), String.valueOf(toCityId), selectedDate, selectedTime);
+        customDialog.show();
+        call.enqueue(new Callback<ArrayList<BusTripModel>>() {
+            @Override
+            public void onResponse(Call<ArrayList<BusTripModel>> call, Response<ArrayList<BusTripModel>> response) {
+                bindBookingData(response.body());
+                customDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<BusTripModel>> call, Throwable t) {
+                Log.e("onFailure", "onFailure" + call.request().url());
+                customDialog.dismiss();
+            }
+        });
+    }
+
     @OnClick(R.id.backArrow)
     public void onViewClicked() {
         onBackPressed();
     }
-    void bindBookingData(ArrayList<String> result){
+
+    void bindBookingData(ArrayList<BusTripModel> result) {
         bookingAdapter = new BusBookingAdapter(result);
         //  recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -63,14 +123,72 @@ public class BusBookingActivity extends AppCompatActivity {
         }
     }
 
-    private class BusBookingAdapter extends RecyclerView.Adapter<BusBookingAdapter.MyViewHolder> {
-        ArrayList<String> bookingCollection;
+    private void showBookingDialog(final BusTripModel tripModel) {
+        mNumberOfSeats = 0;
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.dialog_bus_booking);
 
-        public BusBookingAdapter(ArrayList<String> array) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(BusBookingActivity.this);
+//        View view = LayoutInflater.from(BusBookingActivity.this).inflate(R.layout.dialog_bus_booking, null);
+        ImageView btnAdd = dialog.findViewById(R.id.btnAdd);
+        ImageView btnRemove = dialog.findViewById(R.id.btnRemove);
+        final MyTextView txtNumberOfSeats = dialog.findViewById(R.id.txtNumberSeats);
+        final MyTextView txtTotalPrice = dialog.findViewById(R.id.txtTotalPrice);
+        Button btnBook = dialog.findViewById(R.id.btnBook);
+        mNumberOfSeats = Integer.parseInt(txtNumberOfSeats.getText().toString());
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNumberOfSeats = Integer.parseInt(txtNumberOfSeats.getText().toString());
+                if (mNumberOfSeats < Integer.parseInt(tripModel.getAvailable_seat())) {
+                    mNumberOfSeats = mNumberOfSeats + 1;
+                } else {
+                    Toast.makeText(BusBookingActivity.this, "cannot exceed total available seats", Toast.LENGTH_SHORT).show();
+                }
+                txtNumberOfSeats.setText(mNumberOfSeats + "");
+                txtTotalPrice.setText("Total Rent = " + (mNumberOfSeats * Integer.parseInt(tripModel.getRate())));
+
+            }
+        });
+
+        btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNumberOfSeats = Integer.parseInt(txtNumberOfSeats.getText().toString());
+                if (mNumberOfSeats < 1) {
+                    mNumberOfSeats = 0;
+                } else {
+                    mNumberOfSeats = mNumberOfSeats - 1;
+                }
+                txtNumberOfSeats.setText(mNumberOfSeats + "");
+
+                txtTotalPrice.setText("Total Rent = " + (mNumberOfSeats * Integer.parseInt(tripModel.getRate())));
+
+            }
+        });
+
+        btnBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+//        AlertDialog alert = builder.create();
+//        alert.show();
+        dialog.show();
+    }
+
+    public class BusBookingAdapter extends RecyclerView.Adapter<BusBookingAdapter.MyViewHolder> {
+        ArrayList<BusTripModel> bookingCollection;
+
+        public BusBookingAdapter(ArrayList<BusTripModel> array) {
             this.bookingCollection = array;
         }
 
-        public void append(String item) {
+        public void append(BusTripModel item) {
             bookingCollection.add(item);
         }
 
@@ -83,9 +201,19 @@ public class BusBookingActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-
-
+            final BusTripModel dataObject = bookingCollection.get(position);
+            holder.txtVendorName.setText(dataObject.getVehicle().getName() + "");
+            holder.txtAvailbleSeats.setText(dataObject.getAvailable_seat() + "");
+            holder.txtTotalPrice.setText((Integer.parseInt(dataObject.getAvailable_seat()) * Integer.parseInt(dataObject.getRate())) + "");
+            holder.txtTripDetail.setText(dataObject.getFrom_city().getName() + " - " + dataObject.getTo_city().getName());
+            holder.btnBooking.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showBookingDialog(dataObject);
+                }
+            });
         }
+
 
         @Override
         public int getItemCount() {
@@ -105,11 +233,6 @@ public class BusBookingActivity extends AppCompatActivity {
                 txtTotalPrice = (MyTextView) itemView.findViewById(R.id.txtTotalPrice);
                 btnBooking = (MyButton) itemView.findViewById(R.id.btnBook);
 
-                btnBooking.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                    }
-                });
 
             }
         }

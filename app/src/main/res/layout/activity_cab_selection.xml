@@ -3,8 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_2"
     android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/bg_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideLineSpaceTop"
@@ -56,7 +64,7 @@
             android:layout_marginTop="1dp"
             android:layout_marginRight="25dp"
             android:background="@drawable/white_rect_bg"
-            android:text="Ride Innercity"
+            android:text="Ride Now"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_20sdp" />
@@ -69,7 +77,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="25dp"
             android:background="@drawable/color_rect_bg"
-            android:text="Ride Intercity Car"
+            android:text="2D Car Booking"
             android:textAllCaps="false"
             android:textColor="@color/bg_2"
             android:textSize="@dimen/_20sdp" />
@@ -82,7 +90,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="25dp"
             android:background="@drawable/white_rect_bg"
-            android:text="Ride Intercity Bus"
+            android:text="Bus Booking"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_20sdp" />

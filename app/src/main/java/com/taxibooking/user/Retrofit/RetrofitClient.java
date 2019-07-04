@@ -7,7 +7,7 @@ package com.taxibooking.user.Retrofit;
 import com.taxibooking.user.Helper.URLHelper;
 
 import retrofit2.Retrofit;
-
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RetrofitClient {
@@ -20,6 +20,15 @@ public class RetrofitClient {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
 //                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
+    public static Retrofit getCustomClient() {
+        if (retrofit==null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(URLHelper.base)
+                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
         return retrofit;

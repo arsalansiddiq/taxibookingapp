@@ -20,6 +20,7 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.taxibooking.user.Activities.ActivityCabTypeSelection;
 import com.taxibooking.user.Activities.MainActivity;
 import com.taxibooking.user.R;
 
@@ -71,6 +72,7 @@ public class YourTrips extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(activity, MainActivity.class));
+//                startActivity(new Intent(activity, ActivityCabTypeSelection.class));todo activityChangeHere
             }
         });
         tabHost.setup(getActivity(), getChildFragmentManager(), android.R.id.tabcontent);
