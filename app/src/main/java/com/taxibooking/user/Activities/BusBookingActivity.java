@@ -1,9 +1,12 @@
 package com.taxibooking.user.Activities;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +31,7 @@ import com.taxibooking.user.Retrofit.RetrofitClient;
 import com.taxibooking.user.Utils.MyBoldTextView;
 import com.taxibooking.user.Utils.MyButton;
 import com.taxibooking.user.Utils.MyTextView;
+import com.taxibooking.user.Utils.Utilities;
 
 import java.util.ArrayList;
 
@@ -60,9 +64,9 @@ public class BusBookingActivity extends AppCompatActivity {
     String selectedTime = "";
 
     String accessToken = "";
+    Utilities utils = new Utilities();
     private ApiInterface mApiInterface;
     private CustomDialog customDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +86,40 @@ public class BusBookingActivity extends AppCompatActivity {
         selectedDate = getIntent().getStringExtra("dateSelected");
         selectedTime = getIntent().getStringExtra("timeSelected");
 
+        getFilteredTrips();
+    }
 
+
+    private void bookBusTrip(BusTripModel tripModel, int bookingSeats, int totalPrice) {
+        customDialog.show();
+
+        String userName = SharedHelper.getKey(this, "first_name") + " " + SharedHelper.getKey(this, "last_name");
+        String mobileNumber = SharedHelper.getKey(this, "mobile");
+        Call<Void> call = mApiInterface.postBusBooking(accessToken, String.valueOf(tripModel.getId()), userName, mobileNumber,
+                String.valueOf(fromCityId), String.valueOf(toCityId), selectedDate, selectedTime, String.valueOf(bookingSeats), String.valueOf(totalPrice));
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                customDialog.dismiss();
+                displayMessage("Booking Added successfully. We will contact you soon... ");
+                getToHomeActivity();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("onFailure", "onFailure" + call.request().url());
+                displayMessage("Something went wrong");
+                customDialog.dismiss();
+            }
+        });
+
+    }
+
+    private void getToHomeActivity() {
+        Intent intent = new Intent(this, ActivityCabTypeSelection.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private void getFilteredTrips() {
@@ -173,12 +210,31 @@ public class BusBookingActivity extends AppCompatActivity {
         btnBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mNumberOfSeats = Integer.parseInt(txtNumberOfSeats.getText().toString());
+                if (mNumberOfSeats == 0) {
+                    Toast.makeText(BusBookingActivity.this, "Please select a valid number of seats", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
+                bookBusTrip(tripModel, mNumberOfSeats, mNumberOfSeats * Integer.parseInt(tripModel.getRate()));
+                dialog.dismiss();
             }
         });
-//        AlertDialog alert = builder.create();
-//        alert.show();
         dialog.show();
+    }
+
+    public void displayMessage(String toastString) {
+        utils.print("displayMessage", "" + toastString);
+        try {
+            Snackbar.make(getCurrentFocus(), toastString, Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
+        } catch (Exception e) {
+            try {
+                Toast.makeText(this, "" + toastString, Toast.LENGTH_SHORT).show();
+            } catch (Exception ee) {
+                ee.printStackTrace();
+            }
+        }
     }
 
     public class BusBookingAdapter extends RecyclerView.Adapter<BusBookingAdapter.MyViewHolder> {
@@ -204,7 +260,7 @@ public class BusBookingActivity extends AppCompatActivity {
             final BusTripModel dataObject = bookingCollection.get(position);
             holder.txtVendorName.setText(dataObject.getVehicle().getName() + "");
             holder.txtAvailbleSeats.setText(dataObject.getAvailable_seat() + "");
-            holder.txtTotalPrice.setText((Integer.parseInt(dataObject.getAvailable_seat()) * Integer.parseInt(dataObject.getRate())) + "");
+            holder.txtTotalPrice.setText((Integer.parseInt(dataObject.getRate())) + "");
             holder.txtTripDetail.setText(dataObject.getFrom_city().getName() + " - " + dataObject.getTo_city().getName());
             holder.btnBooking.setOnClickListener(new View.OnClickListener() {
                 @Override

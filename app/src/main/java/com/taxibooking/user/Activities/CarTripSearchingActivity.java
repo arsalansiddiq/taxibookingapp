@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.taxibooking.user.Helper.CustomDialog;
 import com.taxibooking.user.Helper.SharedHelper;
@@ -59,8 +61,8 @@ public class CarTripSearchingActivity extends AppCompatActivity {
     DatePickerDialog datePickerDialog;
     String scheduledDate = "";
     Utilities utils = new Utilities();
-    private boolean afterToday;
     String accessToken = "";
+    private boolean afterToday;
     private ApiInterface mApiInterface;
     private CustomDialog customDialog;
 
@@ -191,7 +193,7 @@ public class CarTripSearchingActivity extends AppCompatActivity {
                         }
                         afterToday = Utilities.isAfterToday(year, monthOfYear, dayOfMonth);
                         btnSelectDate.setText(choosedDate + " " + choosedMonth + " " + year);
-                        scheduledDate = year + "-" + choosedMonth + "-" + choosedDate;
+                        scheduledDate = year + "-" + (monthOfYear + 1) + "-" + choosedDate;
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
@@ -209,12 +211,42 @@ public class CarTripSearchingActivity extends AppCompatActivity {
                 openDatePicker();
                 break;
             case R.id.btnSearchTrip:
-                Intent intent = new Intent(this, CarBookingActivity.class);
-                intent.putExtra("fromCityId", (((CitiesModel) spnFromCity.getSelectedItem()).getId()));
-                intent.putExtra("toCityId", (((CitiesModel) spnToCity.getSelectedItem()).getId()));
-                intent.putExtra("dateSelected", scheduledDate);
-                startActivity(intent);
+                if (isValidated()) {
+                    Intent intent = new Intent(this, CarBookingActivity.class);
+                    intent.putExtra("fromCityId", (((CitiesModel) spnFromCity.getSelectedItem()).getId()));
+                    intent.putExtra("toCityId", (((CitiesModel) spnToCity.getSelectedItem()).getId()));
+                    intent.putExtra("dateSelected", scheduledDate);
+                    startActivity(intent);
+                }
                 break;
         }
+    }
+
+    public void displayMessage(String toastString) {
+        utils.print("displayMessage", "" + toastString);
+        try {
+            Snackbar.make(getCurrentFocus(), toastString, Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
+        } catch (Exception e) {
+            try {
+                Toast.makeText(this, "" + toastString, Toast.LENGTH_SHORT).show();
+            } catch (Exception ee) {
+                ee.printStackTrace();
+            }
+        }
+    }
+
+    private boolean isValidated() {
+        if (spnFromCity.getSelectedItemPosition() == -1 || spnFromCity.getSelectedItem() == null) {
+            displayMessage("Please Select From City");
+            return false;
+        } else if (spnToCity.getSelectedItemPosition() == -1 || spnToCity.getSelectedItem() == null) {
+            displayMessage("Please Select To City");
+            return false;
+        } else if (scheduledDate == null && scheduledDate.isEmpty()) {
+            displayMessage("Please Select From City");
+            return false;
+        }
+        return true;
     }
 }

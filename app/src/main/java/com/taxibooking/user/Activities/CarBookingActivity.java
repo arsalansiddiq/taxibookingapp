@@ -2,10 +2,12 @@ package com.taxibooking.user.Activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -31,6 +33,7 @@ import com.taxibooking.user.Retrofit.RetrofitClient;
 import com.taxibooking.user.Utils.MyBoldTextView;
 import com.taxibooking.user.Utils.MyButton;
 import com.taxibooking.user.Utils.MyTextView;
+import com.taxibooking.user.Utils.Utilities;
 
 import java.util.ArrayList;
 
@@ -64,9 +67,9 @@ public class CarBookingActivity extends AppCompatActivity {
     String selectedDate = "";
 
     String accessToken = "";
+    Utilities utils = new Utilities();
     private ApiInterface mApiInterface;
     private CustomDialog customDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +122,52 @@ public class CarBookingActivity extends AppCompatActivity {
         } else {
             errorLayout.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void bookCarTrip(CarTripModel tripModel, int bookingSeats, int bookingBackSeats, int totalPrice) {
+        customDialog.show();
+
+        String userName = SharedHelper.getKey(this, "first_name") + " " + SharedHelper.getKey(this, "last_name");
+        String mobileNumber = SharedHelper.getKey(this, "mobile");
+        Call<Void> call = mApiInterface.postCarBooking(accessToken, String.valueOf(tripModel.getId()), userName, mobileNumber,
+                String.valueOf(fromCityId), String.valueOf(toCityId), selectedDate, String.valueOf(bookingSeats), String.valueOf(bookingBackSeats), String.valueOf(totalPrice));
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                customDialog.dismiss();
+                displayMessage("Booking Added successfully.  We will contact you soon... ");
+                getToHomeActivity();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("onFailure", "onFailure" + call.request().url());
+                displayMessage("Something went wrong");
+                customDialog.dismiss();
+            }
+        });
+
+    }
+
+    public void displayMessage(String toastString) {
+        utils.print("displayMessage", "" + toastString);
+        try {
+            Snackbar.make(getCurrentFocus(), toastString, Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
+        } catch (Exception e) {
+            try {
+                Toast.makeText(this, "" + toastString, Toast.LENGTH_SHORT).show();
+            } catch (Exception ee) {
+                ee.printStackTrace();
+            }
+        }
+    }
+
+    private void getToHomeActivity() {
+        Intent intent = new Intent(this, ActivityCabTypeSelection.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private void showBookingDialog(final CarTripModel tripModel) {
@@ -217,7 +266,19 @@ public class CarBookingActivity extends AppCompatActivity {
         btnBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                mNumberOfBackSeats = Integer.parseInt(txtNumberOfBackSeats.getText().toString());
+                mNumberOfBackSeats = Integer.parseInt(txtNumberOfBackSeats.getText().toString());
+
+                if (mNumberOfSeats > 0 || mNumberOfBackSeats > 0) {
+
+                    int totalFrontSeatRate = mNumberOfSeats * Integer.parseInt(tripModel.getFront_seat_rate());
+                    int totalBackSeatRate = mNumberOfBackSeats * Integer.parseInt(tripModel.getBack_seat_rate());
+                    bookCarTrip(tripModel, mNumberOfSeats, mNumberOfBackSeats, totalFrontSeatRate + totalBackSeatRate);
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(CarBookingActivity.this, "Please select a valid number of seats", Toast.LENGTH_SHORT).show();
+
+                }
 
             }
         });

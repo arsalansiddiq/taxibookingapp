@@ -81,7 +81,7 @@ public interface ApiInterface {
     @POST(URLHelper.POST_BUS_BOOKING)
     @FormUrlEncoded
     Call<Void> postBusBooking(@Header("Authorization") String strToken,
-                                      @Field("bus_trip_id") String car_trip_id, @Field("name") String name,
+                                      @Field("bus_trip_id") String bus_trip_id, @Field("name") String name,
                                       @Field("number") String number, @Field("from_city_id") String from_city_id,
                                       @Field("to_city_id") String to_city_id, @Field("date") String date,
                                       @Field("time") String time, @Field("booking_seat") String booking_seat,

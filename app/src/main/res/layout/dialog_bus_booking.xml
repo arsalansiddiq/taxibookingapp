@@ -25,7 +25,7 @@
                 android:text="Select Seat"
                 android:textSize="@dimen/_14sdp" />
 
-            <android.support.v7.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -64,10 +64,10 @@
 
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </FrameLayout>
 
 
-            <android.support.v7.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
@@ -82,7 +82,7 @@
                     android:text="Total Rent = 200"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp" />
-            </android.support.v7.widget.CardView>
+            </FrameLayout>
 
             <Button
                 android:id="@+id/btnBook"
