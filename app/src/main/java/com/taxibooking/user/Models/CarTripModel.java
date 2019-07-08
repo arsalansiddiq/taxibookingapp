@@ -34,6 +34,9 @@ public  class CarTripModel {
     @SerializedName("front_seat_rate")
     private String front_seat_rate;
     @Expose
+    @SerializedName("vendor")
+    private String vendor;
+    @Expose
     @SerializedName("to_city_id")
     private int to_city_id;
     @Expose
@@ -42,6 +45,10 @@ public  class CarTripModel {
     @Expose
     @SerializedName("id")
     private int id;
+
+    public String getVendor() {
+        return vendor;
+    }
 
     public Vehicle getVehicle() {
         return vehicle;

@@ -258,7 +258,7 @@ public class BusBookingActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             final BusTripModel dataObject = bookingCollection.get(position);
-            holder.txtVendorName.setText(dataObject.getVehicle().getName() + "");
+            holder.txtVendorName.setText(dataObject.getVendor() + "");
             holder.txtAvailbleSeats.setText(dataObject.getAvailable_seat() + "");
             holder.txtTotalPrice.setText((Integer.parseInt(dataObject.getRate())) + "");
             holder.txtTripDetail.setText(dataObject.getFrom_city().getName() + " - " + dataObject.getTo_city().getName());

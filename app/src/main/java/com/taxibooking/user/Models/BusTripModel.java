@@ -44,6 +44,13 @@ public class BusTripModel {
     @Expose
     @SerializedName("id")
     private int id;
+    @Expose
+    @SerializedName("vendor")
+    private String vendor;
+
+    public String getVendor() {
+        return vendor;
+    }
 
     public Vehicle getVehicle() {
         return vehicle;

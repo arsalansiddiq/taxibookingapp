@@ -314,12 +314,12 @@ public class CarBookingActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
             final CarTripModel dataObject = bookingCollection.get(position);
-            holder.txtVendorName.setText(dataObject.getVehicle().getName() + "");
+            holder.txtVendorName.setText(dataObject.getVendor() + "");
             holder.txtAvailbleSeats.setText((dataObject.getBack_seat() + dataObject.getFront_seat()) + "");
             int totalFrontSeatRate = dataObject.getFront_seat() * Integer.parseInt(dataObject.getFront_seat_rate());
             int totalBackSeatRate = dataObject.getBack_seat() * Integer.parseInt(dataObject.getBack_seat_rate());
             holder.txtTotalPrice.setText((totalBackSeatRate + totalFrontSeatRate) + "");
-            holder.txtCarModel.setText(dataObject.getVehicle().getVehicle_type());
+            holder.txtCarModel.setText(dataObject.getVehicle().getName());
             holder.btnBooking.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
