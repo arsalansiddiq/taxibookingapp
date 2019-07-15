@@ -1,38 +1,42 @@
 {
   "project_info": {
-    "project_number": "571699875382",
-    "firebase_url": "https://afridicab-1552314770136.firebaseio.com",
-    "project_id": "afridicab-1552314770136",
-    "storage_bucket": "afridicab-1552314770136.appspot.com"
+    "project_number": "988279263642",
+    "firebase_url": "https://taxibookingapp-10e7e.firebaseio.com",
+    "project_id": "taxibookingapp-10e7e",
+    "storage_bucket": "taxibookingapp-10e7e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:571699875382:android:5342c85b52117d00",
+        "mobilesdk_app_id": "1:988279263642:android:acb43bd32efdc387",
         "android_client_info": {
-          "package_name": "com.codespare.afridiuser"
+          "package_name": "com.taxibooking.user.righttransport"
         }
       },
       "oauth_client": [
         {
-          "client_id": "571699875382-h5mr0vs9kotrqvdq3d5npmjkioc63cps.apps.googleusercontent.com",
+          "client_id": "988279263642-8nk83q3l777b6gptgj59ev1f0nqt4ot7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.codespare.afridiuser",
-            "certificate_hash": "20fe1167f3168c8b7d843c48272e36c8e28ea7e7"
+            "package_name": "com.taxibooking.user.righttransport",
+            "certificate_hash": "032cb396ca46442a5a7a75d13bf974fee91da6a4"
           }
+        },
+        {
+          "client_id": "988279263642-top4pv1iemj6aamsbb35i9vu34ehvb2i.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAqt7bnb1HuOPwTMs_vK_IFU0QrI6pVSdM"
+          "current_key": "AIzaSyBS0-WFgzFbZD0W4CbABJbgT12iQaxtp9E"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "571699875382-ijvofn0gd7u9jae30v0gefocniidhc1c.apps.googleusercontent.com",
+              "client_id": "988279263642-top4pv1iemj6aamsbb35i9vu34ehvb2i.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -351,7 +351,7 @@ public class Utilities {
         mApiInterface = RetrofitClient.getClient().create(ApiInterface.class);
         formatted_address = "Fetching Address...";
         Call<ResponseBody> call = mApiInterface.getResponse(latitude+","+longitude,
-                context.getResources().getString(R.string.google_map_api));
+                context.getResources().getString(R.string.google_map__webservice_api));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -416,7 +416,7 @@ public class Utilities {
     }
 
     public static String getAddressUsingPlaceId(Context context, String plce_id){
-        String strURL = "https://maps.googleapis.com/maps/api/geocode/json?place_id="+plce_id+"&key="+context.getResources().getString(R.string.google_map_api);
+        String strURL = "https://maps.googleapis.com/maps/api/geocode/json?place_id="+plce_id+"&key="+context.getResources().getString(R.string.google_map__webservice_api);
         return "";
     }
 

@@ -439,7 +439,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
             @Override
             public void onConnected(@Nullable Bundle bundle) {
 
-                FirebaseAuth.getInstance().signOut();
+                try {
+                   // FirebaseAuth.getInstance().signOut();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 if(mGoogleApiClient.isConnected()) {
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
                         @Override
@@ -555,6 +559,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
         };
         BorakhApplication.getInstance().addToRequestQueue(jsonObjectRequest);
     }
+
     public void displayMessage(String toastString) {
         Log.e("displayMessage", "" + toastString);
         try {

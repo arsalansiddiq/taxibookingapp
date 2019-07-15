@@ -16,30 +16,24 @@ public class RetrofitClient {
 
 
     public static Retrofit getClient() {
-        if (retrofit==null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
 //                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
-        }
         return retrofit;
     }
     public static Retrofit getCustomClient() {
-        if (retrofit==null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(URLHelper.base)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-        }
         return retrofit;
     }
 
     public static Retrofit getLiveTrackingClient() {
-        if (retrofit==null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(URLHelper.base)
                     .build();
-        }
         return retrofit;
     }
 }

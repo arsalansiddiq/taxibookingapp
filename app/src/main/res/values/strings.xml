@@ -3,12 +3,13 @@
 
     <string name="app_name">&appName;</string>
     <!--Google map-->
-    <string name="google_map_api" translatable="false">AIzaSyBmTWJoAzY9zqT_G75HL04Nl5y-9Lt00cs</string>
+    <string name="google_map_api" translatable="false">AIzaSyDT84TSfmxcfUd4ZsJP6tA528TT0EwNGLc</string>
+    <string name="google_map__webservice_api" translatable="false">AIzaSyASkSNo9uuG9DlUgJ0EsuVWCTKu_dfkRac</string>
 
     <!--Facebook App Id Account Kit -->
-    <string name="facebook_app_id" translatable="false">264821321107042</string>
-    <string name="fb_login_protocol_scheme">fb264821321107042</string>
-    <string name="ACCOUNT_KIT_CLIENT_TOKEN" translatable="false">14904341959aa068f3e63df001928bfd</string>
+    <string name="facebook_app_id">2457468604312612</string>
+    <string name="fb_login_protocol_scheme">fb2457468604312612</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN" translatable="false">843718257812be6a5dee9a1ab83ef684</string>
 
     <!--Navigation Drawer -->
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>

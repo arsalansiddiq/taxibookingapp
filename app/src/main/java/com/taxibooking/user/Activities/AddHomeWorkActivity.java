@@ -221,7 +221,7 @@ public class AddHomeWorkActivity  extends AppCompatActivity implements GoogleApi
         urlString.append("&location=");
         urlString.append(latitude + "," + longitude); // append lat long of current location to show nearby results.
         urlString.append("&radius=500&language=en");
-        urlString.append("&key=" + getResources().getString(R.string.google_map_api));
+        urlString.append("&key=" + getResources().getString(R.string.google_map__webservice_api));
 
         Log.d("FINAL URL:::   ", urlString.toString());
         return urlString.toString();

@@ -4368,7 +4368,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
         String output = "json";
 
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters+ "&key=" + getString(R.string.google_map_api);
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters+ "&key=" + getString(R.string.google_map__webservice_api);
 
 
         return url;

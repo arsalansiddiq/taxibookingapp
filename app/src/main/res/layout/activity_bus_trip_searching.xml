@@ -139,7 +139,7 @@
                 <com.taxibooking.user.Utils.MyTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Select Trip Date"
+                    android:text="Select Trip Time"
                     android:textSize="@dimen/_14sdp" />
 
                 <Spinner
