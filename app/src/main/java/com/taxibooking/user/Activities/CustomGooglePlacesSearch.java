@@ -14,6 +14,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -36,20 +37,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.taxibooking.user.BorakhApplication;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.gson.Gson;
+import com.taxibooking.user.BorakhApplication;
 import com.taxibooking.user.Constants.AutoCompleteAdapter;
 import com.taxibooking.user.Helper.SharedHelper;
 import com.taxibooking.user.Models.PlacePredictions;
@@ -68,6 +74,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -76,36 +84,34 @@ import retrofit2.Callback;
 public class CustomGooglePlacesSearch extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
+    private static final int MY_PERMISSIONS_REQUEST_LOC = 30;
     double latitude;
     double longitude;
-    private ListView mAutoCompleteList;
-    private EditText txtDestination, txtaddressSource;
-    private String GETPLACESHIT = "places_hit";
-    private PlacePredictions predictions = new PlacePredictions();
-    private AutoCompleteAdapter mAutoCompleteAdapter;
-    private Location mLastLocation;
-    private static final int MY_PERMISSIONS_REQUEST_LOC = 30;
-    private Handler handler;
-    private GoogleApiClient mGoogleApiClient;
     TextView txtPickLocation;
     Utilities utils = new Utilities();
     ImageView backArrow, imgDestClose, imgSourceClose;
     LinearLayout lnrFavorite;
     Activity thisActivity;
     String strSource = "";
-    private ApiInterface mApiInterface;
     String strSelected = "";
-    private PlacePredictions placePredictions = new PlacePredictions();
     Bundle extras;
     TextView txtHomeLocation, txtWorkLocation;
-    private int UPDATE_HOME_WORK = 1;
     LinearLayout lnrHome, lnrWork;
     ArrayList<RecentAddressData> lstRecentList = new ArrayList<RecentAddressData>();
     RelativeLayout rytAddressSource;
-
     RecyclerView rvRecentResults;
-
     String formatted_address = "";
+    private ListView mAutoCompleteList;
+    private EditText txtDestination, txtaddressSource;
+    private String GETPLACESHIT = "places_hit";
+    private PlacePredictions predictions = new PlacePredictions();
+    private AutoCompleteAdapter mAutoCompleteAdapter;
+    private Location mLastLocation;
+    private Handler handler;
+    private GoogleApiClient mGoogleApiClient;
+    private ApiInterface mApiInterface;
+    private PlacePredictions placePredictions = new PlacePredictions();
+    private int UPDATE_HOME_WORK = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -543,7 +549,7 @@ public class CustomGooglePlacesSearch extends AppCompatActivity implements Googl
                             if (othersArray != null && othersArray.length() > 0) {
                                 Log.v("Others Address", "" + othersArray);
                             }
-                            if (recentArray!= null && recentArray.length() > 0) {
+                            if (recentArray != null && recentArray.length() > 0) {
                                 for (int i = 0; i < recentArray.length(); i++) {
                                     RecentAddressData recentAddressData = new RecentAddressData();
                                     JSONObject jsonObject = recentArray.optJSONObject(i);
@@ -586,8 +592,78 @@ public class CustomGooglePlacesSearch extends AppCompatActivity implements Googl
 
     private void setGoogleAddress(int position) {
         if (mGoogleApiClient != null) {
+// Initialize Places.
+            if (!com.google.android.libraries.places.api.Places.isInitialized())
+                com.google.android.libraries.places.api.Places.initialize(getApplicationContext(), getString(R.string.google_map__webservice_api));
+            PlacesClient placesClient = com.google.android.libraries.places.api.Places.createClient(this);
+// Define a Place ID.
+            String placeId = predictions.getPlaces().get(position).getPlaceID();
+
+// Specify the fields to return.
+            List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.ADDRESS_COMPONENTS);
+
+// Construct a request object, passing the place ID and fields array.
+            FetchPlaceRequest request = FetchPlaceRequest.builder(placeId, placeFields)
+                    .build();
+
+            placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
+                @Override
+                public void onSuccess(FetchPlaceResponse response) {
+                    Place myPlace = response.getPlace();
+
+                    LatLng queriedLocation = myPlace.getLatLng();
+                    Log.v("Latitude is", "" + queriedLocation.latitude);
+                    Log.v("Longitude is", "" + queriedLocation.longitude);
+                    if (strSelected.equalsIgnoreCase("destination")) {
+                        placePredictions.strDestAddress = myPlace.getAddress().toString();
+                        placePredictions.strDestLatLng = myPlace.getLatLng().toString();
+                        placePredictions.strDestLatitude = myPlace.getLatLng().latitude + "";
+                        placePredictions.strDestLongitude = myPlace.getLatLng().longitude + "";
+                        txtDestination.setText(placePredictions.strDestAddress);
+                        txtDestination.setSelection(0);
+                    } else {
+                        placePredictions.strSourceAddress = myPlace.getAddress().toString();
+                        placePredictions.strSourceLatLng = myPlace.getLatLng().toString();
+                        placePredictions.strSourceLatitude = myPlace.getLatLng().latitude + "";
+                        placePredictions.strSourceLongitude = myPlace.getLatLng().longitude + "";
+                        txtaddressSource.setText(placePredictions.strSourceAddress);
+                        txtaddressSource.setSelection(0);
+                        txtDestination.requestFocus();
+                        mAutoCompleteAdapter = null;
+                    }
+
+                    mAutoCompleteList.setVisibility(View.GONE);
+
+                    if (txtDestination.getText().toString().length() > 0) {
+                        if (strSelected.equalsIgnoreCase("destination")) {
+                            if (!placePredictions.strDestAddress.equalsIgnoreCase(placePredictions.strSourceAddress)) {
+                                setAddress();
+                            } else {
+                                utils.showAlert(thisActivity, "Source and Destination address should not be same!");
+                            }
+                        }
+                    } else {
+                        txtDestination.requestFocus();
+                        txtDestination.setText("");
+                        imgDestClose.setVisibility(View.GONE);
+                        mAutoCompleteList.setVisibility(View.GONE);
+                    }
+                    Log.i("Places Search", "Place found: " + myPlace.getName());
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    if (exception instanceof ApiException) {
+                        ApiException apiException = (ApiException) exception;
+                        int statusCode = apiException.getStatusCode();
+                        // Handle error with given status code.
+                        Log.e("Places Search", "Place not found: " + exception.getMessage());
+                    }
+                }
+            });
+
             utils.print("", "Place ID == >" + predictions.getPlaces().get(position).getPlaceID());
-            Places.GeoDataApi.getPlaceById(mGoogleApiClient, predictions.getPlaces().get(position).getPlaceID())
+            /*Places.GeoDataApi.getPlaceById(mGoogleApiClient, predictions.getPlaces().get(position).getPlaceID())
                     .setResultCallback(new ResultCallback<PlaceBuffer>() {
                         @Override
                         public void onResult(PlaceBuffer places) {
@@ -632,7 +708,7 @@ public class CustomGooglePlacesSearch extends AppCompatActivity implements Googl
                                 mAutoCompleteList.setVisibility(View.GONE);
                             }
                         }
-                    });
+                    });*/
         }
     }
 
@@ -758,6 +834,22 @@ public class CustomGooglePlacesSearch extends AppCompatActivity implements Googl
         super.onStop();
     }
 
+    private void gotoHomeWork(String strTag) {
+        Intent intentHomeWork = new Intent(CustomGooglePlacesSearch.this, AddHomeWorkActivity.class);
+        intentHomeWork.putExtra("tag", strTag);
+        startActivityForResult(intentHomeWork, UPDATE_HOME_WORK);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == UPDATE_HOME_WORK) {
+            if (resultCode == Activity.RESULT_OK) {
+                getFavoriteLocations();
+            }
+        }
+    }
+
     private class RecentPlacesAdapter extends RecyclerView.Adapter<RecentPlacesAdapter.MyViewHolder> {
         JSONArray jsonArray;
         ArrayList<RecentAddressData> lstRecentList;
@@ -835,22 +927,6 @@ public class CustomGooglePlacesSearch extends AppCompatActivity implements Googl
                 location = (MyBoldTextView) itemView.findViewById(R.id.place_detail);
                 lnrLocation = (LinearLayout) itemView.findViewById(R.id.lnrLocation);
                 imgRecent = (ImageView) itemView.findViewById(R.id.imgRecent);
-            }
-        }
-    }
-
-    private void gotoHomeWork(String strTag) {
-        Intent intentHomeWork = new Intent(CustomGooglePlacesSearch.this, AddHomeWorkActivity.class);
-        intentHomeWork.putExtra("tag", strTag);
-        startActivityForResult(intentHomeWork, UPDATE_HOME_WORK);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == UPDATE_HOME_WORK) {
-            if (resultCode == Activity.RESULT_OK) {
-                getFavoriteLocations();
             }
         }
     }
