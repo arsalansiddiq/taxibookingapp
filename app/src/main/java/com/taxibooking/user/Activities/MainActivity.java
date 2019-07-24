@@ -376,10 +376,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.Home
                         navigateToShareScreen(URLHelper.APP_URL+getPackageName()+"&hl=en");
                         drawer.closeDrawers();
                         return true;
-                    case R.id.nav_language:
-                        language_alert_view(MainActivity.this);
-                        drawer.closeDrawers();
-                        return true;
+//                    case R.id.nav_language:
+//                        language_alert_view(MainActivity.this);
+//                        drawer.closeDrawers();
+//                        return true;
                     case R.id.nav_logout:
                         // launch new intent instead of loading fragment
                         //startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));

@@ -32,6 +32,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.taxibooking.user.BorakhApplication;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -64,6 +70,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -489,7 +497,7 @@ public class AddHomeWorkActivity  extends AppCompatActivity implements GoogleApi
         });
     }
 
-    private void setGoogleAddress(int position) {
+   /* private void setGoogleAddress(int position) {
         if (mGoogleApiClient != null) {
             utils.print("", "Place ID == >"+ predictions.getPlaces().get(position).getPlaceID());
             Places.GeoDataApi.getPlaceById(mGoogleApiClient, predictions.getPlaces().get(position).getPlaceID())
@@ -513,7 +521,59 @@ public class AddHomeWorkActivity  extends AppCompatActivity implements GoogleApi
                         }
                     });
         }
+    }*/
+
+    private void setGoogleAddress(int position) {
+        if (mGoogleApiClient != null) {
+// Initialize Places.
+            if (!com.google.android.libraries.places.api.Places.isInitialized())
+                com.google.android.libraries.places.api.Places.initialize(getApplicationContext(), getString(R.string.google_map__webservice_api));
+            PlacesClient placesClient = com.google.android.libraries.places.api.Places.createClient(this);
+// Define a Place ID.
+            String placeId = predictions.getPlaces().get(position).getPlaceID();
+
+// Specify the fields to return.
+            List<com.google.android.libraries.places.api.model.Place.Field> placeFields = Arrays.asList(com.google.android.libraries.places.api.model.Place.Field.ID, com.google.android.libraries.places.api.model.Place.Field.NAME, com.google.android.libraries.places.api.model.Place.Field.ADDRESS, com.google.android.libraries.places.api.model.Place.Field.LAT_LNG, com.google.android.libraries.places.api.model.Place.Field.ADDRESS_COMPONENTS);
+
+// Construct a request object, passing the place ID and fields array.
+            FetchPlaceRequest request = FetchPlaceRequest.builder(placeId, placeFields)
+                    .build();
+
+            placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
+                @Override
+                public void onSuccess(FetchPlaceResponse response) {
+                    com.google.android.libraries.places.api.model.Place myPlace = response.getPlace();
+
+                        LatLng queriedLocation = myPlace.getLatLng();
+                        Log.v("Latitude is", "" + queriedLocation.latitude);
+                        Log.v("Longitude is", "" + queriedLocation.longitude);
+                        placePredictions.strDestAddress = myPlace.getAddress().toString();
+                        placePredictions.strDestLatLng = myPlace.getLatLng().toString();
+                        placePredictions.strDestLatitude = myPlace.getLatLng().latitude + "";
+                        placePredictions.strDestLongitude = myPlace.getLatLng().longitude + "";
+
+                        AddToHomeWork(strTag, placePredictions.strDestLatitude,
+                                placePredictions.strDestLongitude, placePredictions.strDestAddress);
+
+                    mAutoCompleteList.setVisibility(View.GONE);
+                    Log.i("Places Search", "Place found: " + myPlace.getName());
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    if (exception instanceof ApiException) {
+                        ApiException apiException = (ApiException) exception;
+                        int statusCode = apiException.getStatusCode();
+                        // Handle error with given status code.
+                        Log.e("Places Search", "Place not found: " + exception.getMessage());
+                    }
+                }
+            });
+
+            utils.print("", "Place ID == >" + predictions.getPlaces().get(position).getPlaceID());
+        }
     }
+
 
 
     @Override

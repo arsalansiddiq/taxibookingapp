@@ -43,9 +43,9 @@
             android:title="@string/action_share"
             android:actionMenuTextColor="@color/colorAccent"
             />
-        <item
+        <!--<item
             android:id="@+id/nav_language"
-            android:title="@string/languages"/>
+            android:title="@string/languages"/>-->
         <item
             android:id="@+id/nav_logout"
             android:title="@string/action_logout"

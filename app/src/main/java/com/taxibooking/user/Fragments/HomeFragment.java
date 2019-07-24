@@ -1227,7 +1227,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             String name = SharedHelper.getKey(context, "first_name") + " " + SharedHelper.getKey(context, "last_name");
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "TRANXIT-" + "Mr/Mrs." + name + " would like to share a ride with you at " +
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Right Transport-" + "Mr/Mrs." + name + " would like to share a ride with you at " +
                     shareUrl + current_lat + "," + current_lng);
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
