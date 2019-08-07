@@ -55,7 +55,9 @@ public interface ApiInterface {
 
     @GET(URLHelper.GET_ALL_BUS_TIME_SLOT)
     Call<ArrayList<BusTimeSlotModel>> getAllBusTimeSlots(@Header("Authorization") String strToken,
-                                                         @Query("date") String date);
+                                                         @Query("date") String date,
+                                                         @Query("from_city_id") String from_city_id,
+                                                         @Query("to_city_id") String to_city_id);
 
 
     @GET(URLHelper.GET_ALL_CAR_TRIPS)

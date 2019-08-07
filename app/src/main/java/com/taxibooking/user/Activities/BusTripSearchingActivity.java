@@ -101,22 +101,28 @@ public class BusTripSearchingActivity extends AppCompatActivity {
 
     }
 
-    private void getAllTimeSlotOn(String date) {
-        Call<ArrayList<BusTimeSlotModel>> call = mApiInterface.getAllBusTimeSlots(accessToken, date);
-        customDialog.show();
-        call.enqueue(new Callback<ArrayList<BusTimeSlotModel>>() {
-            @Override
-            public void onResponse(Call<ArrayList<BusTimeSlotModel>> call, Response<ArrayList<BusTimeSlotModel>> response) {
-                bindTimeSlotSpinner(response.body());
-                customDialog.dismiss();
-            }
+    private void getAllTimeSlotOn() {
+        if (scheduledDate != null && !scheduledDate.isEmpty() && spnFromCity.getSelectedItem() != null && spnToCity.getSelectedItem() != null) {
+            String fromCityID = ((CitiesModel) spnFromCity.getSelectedItem()).getId() + "";
+            String toCityID = ((CitiesModel) spnToCity.getSelectedItem()).getId() + "";
+            Call<ArrayList<BusTimeSlotModel>> call = mApiInterface.getAllBusTimeSlots(accessToken, scheduledDate, fromCityID, toCityID);
+            customDialog.show();
+            call.enqueue(new Callback<ArrayList<BusTimeSlotModel>>() {
+                @Override
+                public void onResponse(Call<ArrayList<BusTimeSlotModel>> call, Response<ArrayList<BusTimeSlotModel>> response) {
+                    bindTimeSlotSpinner(response.body());
+                    customDialog.dismiss();
+                }
 
-            @Override
-            public void onFailure(Call<ArrayList<BusTimeSlotModel>> call, Throwable t) {
-                Log.e("onFailure", "onFailure" + call.request().url());
-                customDialog.dismiss();
-            }
-        });
+                @Override
+                public void onFailure(Call<ArrayList<BusTimeSlotModel>> call, Throwable t) {
+                    Log.e("onFailure", "onFailure" + call.request().url());
+                    customDialog.dismiss();
+                }
+            });
+        } else {
+            bindTimeSlotSpinner(new ArrayList<BusTimeSlotModel>());
+        }
 
     }
 
@@ -159,8 +165,7 @@ public class BusTripSearchingActivity extends AppCompatActivity {
         spnToCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                }
+               getAllTimeSlotOn();
             }
 
             @Override
@@ -172,8 +177,7 @@ public class BusTripSearchingActivity extends AppCompatActivity {
         spnFromCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                }
+                getAllTimeSlotOn();
             }
 
             @Override
@@ -267,7 +271,7 @@ public class BusTripSearchingActivity extends AppCompatActivity {
                         afterToday = Utilities.isAfterToday(year, monthOfYear, dayOfMonth);
                         btnSelectDate.setText(choosedDate + " " + choosedMonth + " " + year);
                         scheduledDate = year + "-" + (monthOfYear + 1) + "-" + choosedDate;
-                        getAllTimeSlotOn(year + "-" + (monthOfYear + 1) + "-" + choosedDate);
+                        getAllTimeSlotOn();
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);

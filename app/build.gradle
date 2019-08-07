@@ -6,8 +6,8 @@ android {
         applicationId "com.taxibooking.user.righttransport"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.2.2"
+        versionCode 1
+        versionName "1.0"
 //        versionCode getVersionCode()
 //        versionName getVersionName()
         multiDexEnabled true
